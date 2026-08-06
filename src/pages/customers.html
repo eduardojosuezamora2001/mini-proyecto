@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Administración de Clientes | AdminPro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles/customers.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="AdminPro">
+        <span class="brand-mark">A</span>
+        <span><strong>AdminPro</strong><small>Enterprise ERP</small></span>
+      </a>
+      <nav class="side-nav" aria-label="Navegación principal">
+        <button class="nav-item"><i data-lucide="layout-grid"></i><span>Dashboard</span></button>
+        <button class="nav-item active"><i data-lucide="users-round"></i><span>Customers</span></button>
+        <button class="nav-item"><i data-lucide="archive"></i><span>Products</span></button>
+        <button class="nav-item"><i data-lucide="factory"></i><span>Suppliers</span></button>
+      </nav>
+      <button class="nav-item settings"><i data-lucide="settings"></i><span>Settings</span></button>
+    </aside>
+
+    <main class="workspace">
+      <header class="topbar">
+        <label class="global-search"><i data-lucide="search"></i><input type="search" placeholder="Search customers..." /></label>
+        <div class="top-actions">
+          <button class="icon-button" aria-label="Notificaciones"><i data-lucide="bell"></i><b></b></button>
+          <img class="user-photo" src="https://i.pravatar.cc/80?img=12" alt="Perfil de usuario" />
+        </div>
+      </header>
+
+      <section class="content">
+        <div class="page-header">
+          <div><h1>Administración de Clientes</h1><p>Manage your customer database, view statuses, and add new clients.</p></div>
+          <div class="header-actions">
+            <button class="button secondary"><i data-lucide="download"></i>Export</button>
+            <button class="button primary" id="add-customer"><i data-lucide="plus"></i>Nuevo Cliente</button>
+          </div>
+        </div>
+
+        <section class="customer-card">
+          <div class="table-toolbar">
+            <label class="customer-search"><i data-lucide="search"></i><input id="customer-search" type="search" placeholder="Search by name or email..." /></label>
+            <div class="filter-actions">
+              <label class="status-select"><select id="status-filter"><option value="all">All Statuses</option><option value="active">Active</option><option value="pending">Pending</option><option value="inactive">Inactive</option></select><i data-lucide="chevrons-up-down"></i></label>
+              <button class="filter-button" aria-label="Más filtros"><i data-lucide="list-filter"></i></button>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th><input type="checkbox" id="select-all" aria-label="Seleccionar todos" /></th><th>Name</th><th>Email</th><th>Status</th><th>Last Order</th><th class="actions-head">Actions</th></tr></thead>
+              <tbody id="customer-list">
+                <tr data-status="active"><td><input type="checkbox" /></td><td><div class="person"><span class="avatar blue">ES</span><span><strong>Elena Silva</strong><small>+34 612 345 678</small></span></div></td><td>elena.silva@example.com</td><td><span class="status active"><b></b>Active</span></td><td>2 days ago</td><td></td></tr>
+                <tr data-status="pending"><td><input type="checkbox" /></td><td><div class="person"><span class="avatar purple">MR</span><span><strong>Miguel Rodríguez</strong><small>+34 689 123 456</small></span></div></td><td>m.rodriguez@empresa.com</td><td><span class="status pending"><b></b>Pending</span></td><td><em>No orders yet</em></td><td></td></tr>
+                <tr data-status="inactive"><td><input type="checkbox" /></td><td><div class="person muted"><span class="avatar gray">LC</span><span><strong>Laura Carmen</strong><small>+34 654 321 098</small></span></div></td><td class="muted">laura.c@domain.net</td><td><span class="status inactive"><b></b>Inactive</span></td><td class="muted">Jan 15, 2023</td><td></td></tr>
+                <tr data-status="active"><td><input type="checkbox" /></td><td><div class="person"><span class="avatar blue">CG</span><span><strong>Carlos García</strong><small>+34 677 889 900</small></span></div></td><td>carlos.g@techcorp.com</td><td><span class="status active"><b></b>Active</span></td><td>4 hours ago</td><td></td></tr>
+              </tbody>
+            </table>
+            <p class="empty-state" hidden>No customers match your search.</p>
+          </div>
+
+          <footer class="card-footer">
+            <p>Showing <strong id="visible-count">1 to 4</strong> of <strong>97</strong> customers</p>
+            <nav class="pagination" aria-label="Paginación"><button disabled><i data-lucide="chevron-left"></i></button><button class="current">1</button><button>2</button><button>3</button><span>...</span><button>10</button><button><i data-lucide="chevron-right"></i></button></nav>
+          </footer>
+        </section>
+      </section>
+    </main>
+  </div>
+  <script src="../js/customers.js"></script>
+</body>
+</html>
