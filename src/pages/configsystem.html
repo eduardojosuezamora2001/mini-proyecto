@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configuración del Sistema | AdminPro</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles/configsystem.css" />
+  <link rel="stylesheet" href="../styles/unified-theme.css" />
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+        <div class="brand-copy">
+          <span class="brand-name">AdminPro</span>
+          <span class="brand-subtitle">Enterprise ERP</span>
+        </div>
+      </div>
+
+      <nav class="main-nav" aria-label="Navegación principal">
+        <a class="nav-item" href="adminpanel.html">
+          <i data-lucide="layout-grid"></i>
+          <span>Dashboard</span>
+        </a>
+
+        <a class="nav-item" href="customers.html">
+          <i data-lucide="users"></i>
+          <span>Customers</span>
+        </a>
+
+        <a class="nav-item" href="products.html">
+          <i data-lucide="archive"></i>
+          <span>Products</span>
+        </a>
+
+        <a class="nav-item" href="supplierman.html">
+          <i data-lucide="factory"></i>
+          <span>Suppliers</span>
+        </a>
+
+        <a class="nav-item active" href="configsystem.html" aria-current="page">
+          <i data-lucide="settings"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+    </aside>
+
+    <main class="workspace">
+      <header class="topbar">
+        <div class="search">
+          <i data-lucide="search"></i>
+          <input type="search" aria-label="Buscar configuraciones" placeholder="Search settings..." />
+        </div>
+
+        <div class="toolbar">
+          <button class="icon-button" aria-label="Notificaciones">
+            <i data-lucide="bell"></i>
+            <span class="notification-dot"></span>
+          </button>
+
+          <button class="icon-button" aria-label="Cuenta">
+            <i data-lucide="circle-user-round"></i>
+          </button>
+        </div>
+      </header>
+
+      <section class="content">
+        <div class="page-heading">
+          <h1>Configuración del Sistema</h1>
+          <p>Manage your account settings and preferences.</p>
+        </div>
+
+        <div class="settings-layout">
+          <nav class="settings-nav" aria-label="Secciones de configuración">
+            <button class="nav-item active">
+              <i data-lucide="user-round"></i>
+              <span>Profile</span>
+            </button>
+
+            <button class="nav-item">
+              <i data-lucide="shield-check"></i>
+              <span>Security</span>
+            </button>
+
+            <button class="nav-item">
+              <i data-lucide="sliders-horizontal"></i>
+              <span>Preferences</span>
+            </button>
+
+            <button class="nav-item">
+              <i data-lucide="cpu"></i>
+              <span>System</span>
+            </button>
+          </nav>
+
+          <form class="profile-card">
+            <div class="card-body">
+              <h2>Profile Information</h2>
+              <p class="card-description">
+                Update your account's profile information and email address.
+              </p>
+
+              <div class="avatar-row">
+                <div class="avatar">
+                  <i data-lucide="user-round"></i>
+                </div>
+
+                <div class="avatar-actions">
+                  <button type="button" class="secondary-button">
+                    Change Avatar
+                  </button>
+                  <small>JPG, GIF or PNG. Max size of 800K</small>
+                </div>
+              </div>
+
+              <div class="form-grid">
+                <div class="field">
+                  <label for="first-name">First Name</label>
+                  <input id="first-name" value="Jane" />
+                </div>
+
+                <div class="field">
+                  <label for="last-name">Last Name</label>
+                  <input id="last-name" value="Doe" />
+                </div>
+
+                <div class="field full">
+                  <label for="email">Email Address</label>
+                  <div class="input-wrap">
+                    <i data-lucide="mail"></i>
+                    <input id="email" type="email" value="jane.doe@example.com" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <footer class="card-footer">
+              <button type="reset" class="ghost-button">Cancel</button>
+              <button type="submit" class="primary-button">Save Changes</button>
+            </footer>
+          </form>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="../js/configsystem.js"></script>
+</body>
+</html>

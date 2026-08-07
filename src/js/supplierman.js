@@ -59,6 +59,7 @@ const DATA = {
             phone: "+1 (555) 123-4567"
           },
           address: "1200 Innovation Way, San ...",
+          dateAdded: "2024-01-15",
           status: "Active",
           actions: { type: "menu", icon: "dots-vertical" }
         },
@@ -72,6 +73,7 @@ const DATA = {
             phone: "+1 (555) 987-6543"
           },
           address: "88 Industrial Pkwy, Detroit,...",
+          dateAdded: "2024-03-22",
           status: "Active",
           actions: { type: "menu", icon: "dots-vertical" }
         },
@@ -85,6 +87,7 @@ const DATA = {
             phone: "+44 20 7123 4567"
           },
           address: "45 Canary Wharf, London, ...",
+          dateAdded: "2023-11-05",
           status: "Inactive",
           actions: { type: "menu", icon: "dots-vertical" }
         }
@@ -157,7 +160,7 @@ function showToast(message) {
 }
 
 // ---------------------------------------------------------------------------
-// Filtros — estado + persistencia en localStorage
+// 3b. Filters — state + localStorage persistence
 // ---------------------------------------------------------------------------
 const FILTERS_STORAGE_KEY = "adminpro.suppliers.filters";
 
@@ -183,7 +186,8 @@ function saveFilters(filters) {
   try {
     localStorage.setItem(FILTERS_STORAGE_KEY, JSON.stringify(filters));
   } catch (err) {
-    // localStorage no disponible; los filtros no persisten
+    // localStorage no disponible (modo privado, cuota, etc.) — se ignora
+    // y los filtros simplemente no persisten entre sesiones.
   }
 }
 
@@ -206,9 +210,6 @@ function matchesFilters(row, filters) {
 }
 
 let currentFilters = loadFilters();
-
-
-
 
 // ---------------------------------------------------------------------------
 // 4. Render: sidebar brand + navigation
@@ -271,6 +272,7 @@ function renderPageHeading(page) {
   primaryBtn.innerHTML = `${icon(page.primaryAction.icon)}<span>${escapeHtml(page.primaryAction.label)}</span>`;
   primaryBtn.addEventListener("click", () => showToast(`"${page.primaryAction.label}" — formulario próximamente`));
 }
+
 function renderToolbar(toolbar) {
   const el = document.getElementById("toolbar");
   el.innerHTML = `
@@ -326,6 +328,9 @@ function renderToolbar(toolbar) {
   setupFilterPanel();
 }
 
+// ---------------------------------------------------------------------------
+// 6b. Filter panel wiring
+// ---------------------------------------------------------------------------
 function updateFilterDot() {
   document.getElementById("filter-dot").hidden = isFiltersDefault(currentFilters);
 }
@@ -366,7 +371,11 @@ function setupFilterPanel() {
     e.stopPropagation();
     const isOpen = panel.classList.contains("is-open");
     closeAllMenus();
-    if (isOpen) closePanel(); else openPanel();
+    if (isOpen) {
+      closePanel();
+    } else {
+      openPanel();
+    }
   });
 
   panel.addEventListener("click", (e) => e.stopPropagation());
@@ -382,22 +391,6 @@ function setupFilterPanel() {
     showToast("Filtros aplicados");
   });
 
-
-
-
-
-
-  function refreshTable() {
-    const input = document.getElementById("search-input");
-    renderTableBody(DATA.page.table.rows, input ? input.value : "", currentFilters);
-  }
-
-
-  function setupSearch(rows) {
-    const input = document.getElementById("search-input");
-    input.addEventListener("input", () => refreshTable());
-  }
-
   document.getElementById("filter-clear").addEventListener("click", () => {
     currentFilters = { ...DEFAULT_FILTERS };
     saveFilters(currentFilters);
@@ -407,10 +400,10 @@ function setupFilterPanel() {
     closePanel();
     showToast("Filtros limpiados");
   });
+
+  // cerrar al hacer click fuera del panel (reutiliza el listener global de closeAllMenus)
+  wrap.dataset.filterWrap = "true";
 }
-
-
-
 
 // ---------------------------------------------------------------------------
 // 7. Render: table
@@ -430,6 +423,11 @@ function renderTableBody(rows, searchTerm = "", filters = DEFAULT_FILTERS) {
       r.contactPerson.toLowerCase().includes(term);
     return matchesSearch && matchesFilters(r, filters);
   });
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 32px; color: var(--on-surface-variant);">No se encontraron proveedores.</td></tr>`;
+    return;
+  }
 
   tbody.innerHTML = filtered.map(renderRow).join("");
 
@@ -575,9 +573,14 @@ function setupMobileSidebar() {
 // ---------------------------------------------------------------------------
 // 10. Wire-up: search filter, nav clicks, outside-click menu close
 // ---------------------------------------------------------------------------
+function refreshTable() {
+  const input = document.getElementById("search-input");
+  renderTableBody(DATA.page.table.rows, input ? input.value : "", currentFilters);
+}
+
 function setupSearch(rows) {
   const input = document.getElementById("search-input");
-  input.addEventListener("input", () => renderTableBody(rows, input.value));
+  input.addEventListener("input", () => refreshTable());
 }
 
 function setupNavClicks() {
@@ -613,10 +616,3 @@ function init() {
 }
 
 document.addEventListener("DOMContentLoaded", init);
-
-
-
-
-
-
-

@@ -1,0 +1,14 @@
+:root { --admin-primary:#2563eb; --admin-bg:#f7f9fd; --admin-line:#dce2ec; --admin-text:#172033; --admin-sidebar:240px; }
+body { background:var(--admin-bg); color:var(--admin-text); font-family:Inter,Arial,sans-serif; }
+.sidebar { width:var(--admin-sidebar); flex-basis:var(--admin-sidebar); background:#fff; border-right:1px solid var(--admin-line); }
+.topbar, .top-bar { min-height:64px; height:64px; background:rgba(255,255,255,.88); border-bottom:1px solid var(--admin-line); }
+.content { width:100%; max-width:1200px; padding:32px; }
+.brand { text-decoration:none; }
+.side-nav .nav-item, .main-nav > .nav-item, .nav-list a, .sidebar-footer a, .nav .nav-item, .nav-footer .nav-item {
+  min-height:42px; border-radius:8px; text-decoration:none;
+}
+.side-nav .nav-item.active, .main-nav > .nav-item.active, .nav-list a.active, .nav .nav-item.is-active {
+  background:#dce8ff; color:#174ea6;
+}
+.customer-card, .table-card, .profile-card, .panel, .kpi-card { border-color:var(--admin-line); box-shadow:0 1px 3px rgba(20,27,43,.05); }
+@media (max-width:760px) { .content { padding:22px 16px; } }
