@@ -1,91 +1,43 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AdminPro · Administración de Proveedores</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../styles/supplierman.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Administración de Proveedores | AdminPro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles/customers.css" />
+  <link rel="stylesheet" href="../styles/unified-theme.css" />
+  <link rel="stylesheet" href="../styles/crud-modal.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body>
-
-  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
-
+<body class="supplier-page">
   <div class="app-shell">
-
-    <!-- Sidebar -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-top">
-        <div class="sidebar-header">
-          <div class="logo-icon" id="logo-icon"></div>
-          <div class="brand">
-            <p class="brand-name" id="brand-name"></p>
-            <p class="brand-tagline" id="brand-tagline"></p>
-          </div>
-        </div>
-        <button class="sidebar-close" id="sidebar-close" aria-label="Cerrar menú"></button>
-      </div>
-
-      <nav class="nav-main" id="nav-main" aria-label="Navegación principal"></nav>
-
-      <div class="nav-footer" id="nav-footer"></div>
+    <aside class="sidebar">
+      <a class="brand" href="adminpanel.html" aria-label="AdminPro"><span class="brand-mark">A</span><span><strong>AdminPro</strong><small>Enterprise ERP</small></span></a>
+      <nav class="side-nav" aria-label="Navegación principal">
+        <a class="nav-item" href="adminpanel.html"><i data-lucide="layout-grid"></i><span>Dashboard</span></a>
+        <a class="nav-item" href="customers.html"><i data-lucide="users-round"></i><span>Customers</span></a>
+        <a class="nav-item" href="products.html"><i data-lucide="archive"></i><span>Products</span></a>
+        <a class="nav-item active" href="supplierman.html" aria-current="page"><i data-lucide="factory"></i><span>Suppliers</span></a>
+      </nav>
+      <a class="nav-item settings" href="configsystem.html"><i data-lucide="settings"></i><span>Settings</span></a>
     </aside>
-
-    <!-- Main column -->
-    <div class="main-column">
-
-      <header class="topbar">
-        <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Abrir menú"></button>
-
-        <div class="search-box">
-          <span class="search-icon" id="search-icon"></span>
-          <input type="text" id="search-input" class="search-input" autocomplete="off" />
-        </div>
-
-        <div class="topbar-actions">
-          <button class="icon-button" id="notif-btn" aria-label="Notificaciones">
-            <span id="bell-icon"></span>
-            <span class="notif-dot" id="notif-dot" hidden></span>
-          </button>
-          <button class="avatar" id="user-avatar" aria-label="Cuenta de usuario"></button>
-        </div>
-      </header>
-
-      <main class="content">
-
-        <div class="page-heading">
-          <div class="page-heading-text">
-            <h2 class="page-title" id="page-title"></h2>
-            <p class="page-subtitle" id="page-subtitle"></p>
-          </div>
-          <button class="btn btn-primary" id="primary-action"></button>
-        </div>
-
-        <section class="table-card">
-          <div class="toolbar" id="toolbar"></div>
-
-          <div class="table-wrapper">
-            <table class="data-table">
-              <thead id="table-head"></thead>
-              <tbody id="table-body"></tbody>
-            </table>
-          </div>
-
-          <div class="table-footer">
-            <p class="table-summary" id="table-summary"></p>
-            <nav class="pagination" id="pagination" aria-label="Paginación"></nav>
-          </div>
+    <main class="workspace">
+      <header class="topbar"><label class="global-search"><i data-lucide="search"></i><input id="supplier-search" type="search" placeholder="Search suppliers..." /></label><div class="top-actions"><button class="icon-button" aria-label="Notificaciones"><i data-lucide="bell"></i><b></b></button><span class="user-photo supplier-user">AD</span></div></header>
+      <section class="content">
+        <div class="page-header"><div><h1>Administración de Proveedores</h1><p>Manage and monitor enterprise supplier relationships.</p></div><div class="header-actions"><button class="button secondary" id="export-suppliers"><i data-lucide="download"></i>Export</button><button class="button primary" id="add-supplier"><i data-lucide="plus"></i>Nuevo Proveedor</button></div></div>
+        <section class="customer-card">
+          <div class="table-toolbar"><strong>Directorio de proveedores</strong><label class="status-select"><select id="supplier-status"><option value="all">Todos los estados</option><option value="active">Activos</option><option value="inactive">Inactivos</option></select><i data-lucide="chevrons-up-down"></i></label></div>
+          <div class="table-wrap"><table><thead><tr><th>Empresa</th><th>Contacto</th><th>Correo / Teléfono</th><th>Estado</th><th>Dirección</th><th class="actions-head">Acciones</th></tr></thead><tbody id="supplier-list"></tbody></table><p class="empty-state" hidden>No se encontraron proveedores.</p></div>
+          <footer class="card-footer"><p>Showing <strong id="supplier-visible">0</strong> of <strong id="supplier-total">0</strong> suppliers</p></footer>
         </section>
-
-      </main>
-    </div>
+      </section>
+    </main>
   </div>
-
-  <div class="toast" id="toast"></div>
-
-<script src="../js/supplierman.js"></script>
+  <script src="../js/localStorage.js"></script>
+  <script src="../js/crudModal.js"></script>
+  <script src="../js/supplierman.js"></script>
 </body>
 </html>

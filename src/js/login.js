@@ -16,7 +16,7 @@ import { login, isLogged } from '../auth/auth.js';
 document.addEventListener('DOMContentLoaded', () => {
     // Si ya hay una sesión activa, no tiene sentido mostrar el login.
     if (isLogged()) {
-        window.location.replace('dashboard.html');
+        window.location.replace('adminpanel.html');
         return;
     }
 
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const result = login(username, password);
 
         if (result.success) {
-            window.location.replace('dashboard.html');
+            window.location.replace('adminpanel.html');
         } else {
             showError(result.message);
         }
