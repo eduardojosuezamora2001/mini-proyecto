@@ -157,6 +157,60 @@ function showToast(message) {
 }
 
 // ---------------------------------------------------------------------------
+// Filtros — estado + persistencia en localStorage
+// ---------------------------------------------------------------------------
+const FILTERS_STORAGE_KEY = "adminpro.suppliers.filters";
+
+const DEFAULT_FILTERS = {
+  statusActive: true,
+  statusInactive: true,
+  dateFrom: "",
+  dateTo: ""
+};
+
+function loadFilters() {
+  try {
+    const raw = localStorage.getItem(FILTERS_STORAGE_KEY);
+    if (!raw) return { ...DEFAULT_FILTERS };
+    const parsed = JSON.parse(raw);
+    return { ...DEFAULT_FILTERS, ...parsed };
+  } catch (err) {
+    return { ...DEFAULT_FILTERS };
+  }
+}
+
+function saveFilters(filters) {
+  try {
+    localStorage.setItem(FILTERS_STORAGE_KEY, JSON.stringify(filters));
+  } catch (err) {
+    // localStorage no disponible; los filtros no persisten
+  }
+}
+
+function isFiltersDefault(filters) {
+  return (
+    filters.statusActive === DEFAULT_FILTERS.statusActive &&
+    filters.statusInactive === DEFAULT_FILTERS.statusInactive &&
+    filters.dateFrom === DEFAULT_FILTERS.dateFrom &&
+    filters.dateTo === DEFAULT_FILTERS.dateTo
+  );
+}
+
+function matchesFilters(row, filters) {
+  const status = row.status.toLowerCase();
+  if (status === "active" && !filters.statusActive) return false;
+  if (status === "inactive" && !filters.statusInactive) return false;
+  if (filters.dateFrom && row.dateAdded < filters.dateFrom) return false;
+  if (filters.dateTo && row.dateAdded > filters.dateTo) return false;
+  return true;
+}
+
+let currentFilters = loadFilters();
+
+
+
+
+// ---------------------------------------------------------------------------
 // 4. Render: sidebar brand + navigation
 // ---------------------------------------------------------------------------
 function renderBrand(app) {
@@ -217,20 +271,146 @@ function renderPageHeading(page) {
   primaryBtn.innerHTML = `${icon(page.primaryAction.icon)}<span>${escapeHtml(page.primaryAction.label)}</span>`;
   primaryBtn.addEventListener("click", () => showToast(`"${page.primaryAction.label}" — formulario próximamente`));
 }
-
 function renderToolbar(toolbar) {
   const el = document.getElementById("toolbar");
   el.innerHTML = `
-    <button class="btn btn-secondary" id="filter-btn">
-      ${icon(toolbar.filterButton.icon)}<span>${escapeHtml(toolbar.filterButton.label)}</span>
-    </button>
+    <div class="filter-wrap" id="filter-wrap">
+      <button class="btn btn-secondary filter-btn-wrap" id="filter-btn">
+        ${icon(toolbar.filterButton.icon)}<span>${escapeHtml(toolbar.filterButton.label)}</span>
+        <span class="filter-dot" id="filter-dot" hidden></span>
+      </button>
+
+      <div class="filter-panel" id="filter-panel">
+        <div class="filter-panel-header">
+          <span class="filter-panel-title">Filtros</span>
+          <button type="button" class="filter-clear" id="filter-clear">Limpiar</button>
+        </div>
+
+        <div class="filter-group">
+          <span class="filter-group-label">Estado</span>
+          <div class="filter-checkbox-row">
+            <label class="filter-checkbox">
+              <input type="checkbox" id="filter-status-active">
+              Activo
+            </label>
+            <label class="filter-checkbox">
+              <input type="checkbox" id="filter-status-inactive">
+              Inactivo
+            </label>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <span class="filter-group-label">Fecha de alta</span>
+          <div class="filter-date-row">
+            <input type="date" class="filter-date-input" id="filter-date-from" aria-label="Desde">
+            <span>—</span>
+            <input type="date" class="filter-date-input" id="filter-date-to" aria-label="Hasta">
+          </div>
+        </div>
+
+        <div class="filter-panel-footer">
+          <button type="button" class="btn btn-secondary" id="filter-cancel">Cancelar</button>
+          <button type="button" class="btn btn-primary" id="filter-apply">Aplicar</button>
+        </div>
+      </div>
+    </div>
+
     <button class="btn btn-secondary" id="export-btn">
       ${icon(toolbar.exportButton.icon)}<span>${escapeHtml(toolbar.exportButton.label)}</span>
     </button>
   `;
-  document.getElementById("filter-btn").addEventListener("click", () => showToast("Filtros próximamente"));
+
   document.getElementById("export-btn").addEventListener("click", () => showToast("Exportando proveedores..."));
+
+  setupFilterPanel();
 }
+
+function updateFilterDot() {
+  document.getElementById("filter-dot").hidden = isFiltersDefault(currentFilters);
+}
+
+function fillFilterInputs(filters) {
+  document.getElementById("filter-status-active").checked = filters.statusActive;
+  document.getElementById("filter-status-inactive").checked = filters.statusInactive;
+  document.getElementById("filter-date-from").value = filters.dateFrom;
+  document.getElementById("filter-date-to").value = filters.dateTo;
+}
+
+function readFilterInputs() {
+  return {
+    statusActive: document.getElementById("filter-status-active").checked,
+    statusInactive: document.getElementById("filter-status-inactive").checked,
+    dateFrom: document.getElementById("filter-date-from").value,
+    dateTo: document.getElementById("filter-date-to").value
+  };
+}
+
+function setupFilterPanel() {
+  const wrap = document.getElementById("filter-wrap");
+  const btn = document.getElementById("filter-btn");
+  const panel = document.getElementById("filter-panel");
+
+  fillFilterInputs(currentFilters);
+  updateFilterDot();
+
+  function openPanel() {
+    fillFilterInputs(currentFilters);
+    panel.classList.add("is-open");
+  }
+  function closePanel() {
+    panel.classList.remove("is-open");
+  }
+
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const isOpen = panel.classList.contains("is-open");
+    closeAllMenus();
+    if (isOpen) closePanel(); else openPanel();
+  });
+
+  panel.addEventListener("click", (e) => e.stopPropagation());
+
+  document.getElementById("filter-cancel").addEventListener("click", closePanel);
+
+  document.getElementById("filter-apply").addEventListener("click", () => {
+    currentFilters = readFilterInputs();
+    saveFilters(currentFilters);
+    updateFilterDot();
+    refreshTable();
+    closePanel();
+    showToast("Filtros aplicados");
+  });
+
+
+
+
+
+
+  function refreshTable() {
+    const input = document.getElementById("search-input");
+    renderTableBody(DATA.page.table.rows, input ? input.value : "", currentFilters);
+  }
+
+
+  function setupSearch(rows) {
+    const input = document.getElementById("search-input");
+    input.addEventListener("input", () => refreshTable());
+  }
+
+  document.getElementById("filter-clear").addEventListener("click", () => {
+    currentFilters = { ...DEFAULT_FILTERS };
+    saveFilters(currentFilters);
+    fillFilterInputs(currentFilters);
+    updateFilterDot();
+    refreshTable();
+    closePanel();
+    showToast("Filtros limpiados");
+  });
+}
+
+
+
 
 // ---------------------------------------------------------------------------
 // 7. Render: table
@@ -240,21 +420,16 @@ function renderTableHead(columns) {
   thead.innerHTML = `<tr>${columns.map(c => `<th>${escapeHtml(c)}</th>`).join("")}</tr>`;
 }
 
-function renderTableBody(rows, searchTerm = "") {
+function renderTableBody(rows, searchTerm = "", filters = DEFAULT_FILTERS) {
   const tbody = document.getElementById("table-body");
   const term = searchTerm.trim().toLowerCase();
 
-  const filtered = term
-    ? rows.filter(r =>
-        r.companyName.toLowerCase().includes(term) ||
-        r.contactPerson.toLowerCase().includes(term)
-      )
-    : rows;
-
-  if (filtered.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 32px; color: var(--on-surface-variant);">No se encontraron proveedores.</td></tr>`;
-    return;
-  }
+  const filtered = rows.filter(r => {
+    const matchesSearch = !term ||
+      r.companyName.toLowerCase().includes(term) ||
+      r.contactPerson.toLowerCase().includes(term);
+    return matchesSearch && matchesFilters(r, filters);
+  });
 
   tbody.innerHTML = filtered.map(renderRow).join("");
 
@@ -280,6 +455,7 @@ function renderTableBody(rows, searchTerm = "") {
 
 function closeAllMenus() {
   document.querySelectorAll(".action-menu.is-open").forEach(m => m.classList.remove("is-open"));
+  document.querySelectorAll(".filter-panel.is-open").forEach(m => m.classList.remove("is-open"));
 }
 
 function renderRow(row) {
@@ -429,7 +605,7 @@ function init() {
   renderPageHeading(DATA.page);
   renderToolbar(DATA.page.toolbar);
   renderTableHead(DATA.page.table.columns);
-  renderTableBody(DATA.page.table.rows);
+  renderTableBody(DATA.page.table.rows, "", currentFilters);
   renderPagination(DATA.page.pagination, goToPage);
   setupSearch(DATA.page.table.rows);
   setupNavClicks();
@@ -437,3 +613,10 @@ function init() {
 }
 
 document.addEventListener("DOMContentLoaded", init);
+
+
+
+
+
+
+
