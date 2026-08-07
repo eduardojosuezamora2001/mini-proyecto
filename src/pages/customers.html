@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +12,7 @@
   <link rel="stylesheet" href="../styles/unified-theme.css" />
   <link rel="stylesheet" href="../styles/crud-modal.css" />
   <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="../styles/navigation.css">
 </head>
 <body>
   <div class="app-shell">
@@ -29,9 +31,13 @@
       <a class="nav-item settings" href="configsystem.html"><i data-lucide="settings"></i><span>Settings</span></a>
     </aside>
 
+<body data-page="customers">
+  <div class="app-shell">
+    <aside id="sidebar"></aside>
     <main class="workspace">
       <header class="topbar">
-        <label class="global-search"><i data-lucide="search"></i><input type="search" placeholder="Search customers..." /></label>
+        <label class="global-search"><i data-lucide="search"></i><input type="search"
+            placeholder="Search customers..." /></label>
         <div class="top-actions">
           <button class="icon-button" aria-label="Notificaciones"><i data-lucide="bell"></i><b></b></button>
           <img class="user-photo" src="https://i.pravatar.cc/80?img=12" alt="Perfil de usuario" />
@@ -40,7 +46,10 @@
 
       <section class="content">
         <div class="page-header">
-          <div><h1>Administración de Clientes</h1><p>Manage your customer database, view statuses, and add new clients.</p></div>
+          <div>
+            <h1>Administración de Clientes</h1>
+            <p>Manage your customer database, view statuses, and add new clients.</p>
+          </div>
           <div class="header-actions">
             <button class="button secondary"><i data-lucide="download"></i>Export</button>
             <button class="button primary" id="add-customer"><i data-lucide="plus"></i>Nuevo Cliente</button>
@@ -49,9 +58,15 @@
 
         <section class="customer-card">
           <div class="table-toolbar">
-            <label class="customer-search"><i data-lucide="search"></i><input id="customer-search" type="search" placeholder="Search by name or email..." /></label>
+            <label class="customer-search"><i data-lucide="search"></i><input id="customer-search" type="search"
+                placeholder="Search by name or email..." /></label>
             <div class="filter-actions">
-              <label class="status-select"><select id="status-filter"><option value="all">All Statuses</option><option value="active">Active</option><option value="pending">Pending</option><option value="inactive">Inactive</option></select><i data-lucide="chevrons-up-down"></i></label>
+              <label class="status-select"><select id="status-filter">
+                  <option value="all">All Statuses</option>
+                  <option value="active">Active</option>
+                  <option value="pending">Pending</option>
+                  <option value="inactive">Inactive</option>
+                </select><i data-lucide="chevrons-up-down"></i></label>
               <button class="filter-button" aria-label="Más filtros"><i data-lucide="list-filter"></i></button>
             </div>
           </div>
@@ -79,5 +94,6 @@
   <script src="../js/appCore.js"></script>
   <script src="../js/crudModal.js"></script>
   <script src="../js/customers.js"></script>
+  <script src="../js/navigation.js" defer></script>
 </body>
 </html>
