@@ -1,23 +1,24 @@
+
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AdminPro — Enterprise ERP</title>
-  <meta name="description" content="AdminPro, panel de control para la gestión empresarial." />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AdminPro — Enterprise ERP</title>
+<meta name="description" content="AdminPro, panel de control para la gestión empresarial." />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
 <link rel="stylesheet" href="../styles/adminpanel.css">
 <link rel="stylesheet" href="../styles/unified-theme.css">
 </head>
+<body>
 
-<body data-page="admin-panel">
+<div class="app-shell">
 
-  <div class="app-shell">
+  <div class="scrim" id="scrim" hidden></div>
 
   <aside class="sidebar" id="sidebar" aria-label="Navegación principal">
     <div class="sidebar-top">
@@ -33,20 +34,18 @@
       <nav class="nav" id="nav" aria-label="Secciones"></nav>
     </div>
 
-    <aside id="sidebar"></aside>
-    <div class="main">
+    <div class="sidebar-bottom">
+      <div class="nav-footer" id="navFooter"></div>
+      <div class="user-card" id="userCard"></div>
+    </div>
+  </aside>
 
-      <header class="topbar">
-        <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" data-icon="menu"></button>
+  <div class="main">
 
     <header class="topbar">
       <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false">☰</button>
 
-        <div class="topbar-actions">
-          <label class="search" for="searchInput">
-            <span class="search-icon" data-icon="search" aria-hidden="true"></span>
-            <input type="text" id="searchInput" autocomplete="off" />
-          </label>
+      <h1 class="topbar-title" id="topbarTitle"></h1>
 
       <div class="topbar-actions">
         <label class="search" for="searchInput">
@@ -65,18 +64,18 @@
       </div>
     </header>
 
-        <section class="welcome" id="welcome" aria-label="Bienvenida"></section>
+    <main class="content">
 
-        <section class="kpi-grid" id="kpiGrid" aria-label="Indicadores clave"></section>
+      <section class="welcome" id="welcome" aria-label="Bienvenida"></section>
 
-        <section class="panels">
-          <div class="panel chart-panel" id="chartPanel" aria-label="Crecimiento mensual"></div>
-          <div class="panel activity-panel" id="activityPanel" aria-label="Actividad reciente"></div>
-        </section>
+      <section class="kpi-grid" id="kpiGrid" aria-label="Indicadores clave"></section>
 
-      </main>
-    </div>
+      <section class="panels">
+        <div class="panel chart-panel" id="chartPanel" aria-label="Crecimiento mensual"></div>
+        <div class="panel activity-panel" id="activityPanel" aria-label="Actividad reciente"></div>
+      </section>
 
+    </main>
   </div>
 
 </div>
