@@ -1033,3 +1033,143 @@ svg {
     line-height: 34px;
   }
 }
+
+
+
+
+.filter-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.filter-btn-wrap {
+  position: relative;
+}
+
+.filter-dot {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 9px;
+  height: 9px;
+  border-radius: var(--radius-full);
+  background: var(--primary);
+  border: 2px solid var(--surface-container-lowest);
+}
+
+.filter-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 280px;
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-2);
+  padding: var(--space-md);
+  z-index: 40;
+  display: none;
+  text-align: left;
+}
+
+.filter-panel.is-open {
+  display: block;
+}
+
+.filter-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+
+.filter-panel-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--on-surface);
+}
+
+.filter-clear {
+  border: none;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary);
+  padding: 2px 4px;
+}
+
+.filter-clear:hover {
+  text-decoration: underline;
+}
+
+.filter-group {
+  margin-bottom: var(--space-md);
+}
+
+.filter-group-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--on-surface-variant);
+  margin-bottom: var(--space-sm);
+}
+
+.filter-checkbox-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.filter-checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 13px;
+  color: var(--on-surface);
+}
+
+.filter-checkbox input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--primary);
+}
+
+.filter-date-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.filter-date-row span {
+  font-size: 12px;
+  color: var(--on-surface-variant);
+}
+
+.filter-date-input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px;
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-family: var(--font-family);
+  color: var(--input-text);
+  background: var(--surface-container-lowest);
+}
+
+.filter-panel-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--card-border);
+}
+
+.filter-panel-footer .btn {
+  height: 36px;
+  padding: 0 var(--space-md);
+  font-size: 13px;
+}
