@@ -11,6 +11,8 @@ button,input,select { font:inherit; }.app-shell { min-height:100vh; display:flex
 .crud-actions { white-space:nowrap; text-align:right; }
 .crud-actions button { margin-left:5px; padding:5px 8px; border:1px solid #dce2ed; border-radius:6px; background:#fff; color:#2259b8; cursor:pointer; }
 .crud-actions button[data-action="delete"] { color:#b42318; }
+.crud-actions button[data-action="view"] { color:#475569; }
+.crud-actions button:hover { background:#f1f4f9; }
 .nav-item { text-decoration:none; }
 .supplier-user { display:grid; place-items:center; background:#dce6fb; color:#174ea6; font-size:10px; font-weight:700; }
 .supplier-page th:first-child,.supplier-page td:first-child { width:auto; padding:8px 14px; }

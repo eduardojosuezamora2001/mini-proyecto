@@ -4,6 +4,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const profileForm = document.querySelector(".profile-card");
   const navItems = document.querySelectorAll(".nav-item");
   const avatarButton = document.querySelector(".secondary-button");
+  const exportButton = document.getElementById("export-data");
+  const importButton = document.getElementById("import-data");
+  const importFile = document.getElementById("import-file");
+  const backupMessage = document.getElementById("backup-message");
+
+  function updateBackupSummary() {
+    const database = Storage.getDatabase();
+    document.getElementById("backup-summary").textContent = `${database.customers.length} clientes · ${database.products.length} productos · ${database.suppliers.length} proveedores · ${database.orders.length} pedidos`;
+  }
 
   navItems.forEach((item) => {
     item.addEventListener("click", () => {
@@ -39,4 +48,24 @@ document.addEventListener("DOMContentLoaded", () => {
     filePicker.accept = "image/png,image/jpeg,image/gif";
     filePicker.click();
   });
+
+  exportButton.addEventListener("click", () => {
+    Storage.downloadAll(`adminpro-backup-${new Date().toISOString().slice(0, 10)}.json`);
+    backupMessage.textContent = "Respaldo exportado correctamente.";
+  });
+
+  importButton.addEventListener("click", () => importFile.click());
+  importFile.addEventListener("change", async () => {
+    const file = importFile.files[0]; if (!file) return;
+    try {
+      Storage.importAll(await file.text());
+      backupMessage.textContent = "Información restaurada correctamente.";
+      updateBackupSummary();
+    } catch (error) {
+      backupMessage.textContent = error.message;
+    } finally {
+      importFile.value = "";
+    }
+  });
+  updateBackupSummary();
 });
