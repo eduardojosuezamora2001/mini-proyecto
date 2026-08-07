@@ -25,7 +25,7 @@
     const suppliers = read("suppliers");
     const orders = read("orders");
     const metrics = BusinessRules.analytics();
-    const roleLabel = AppCore.isAdmin() ? "Administrador" : "Operador";
+    const roleLabel = AppCore.roleLabel();
     document.getElementById("topbarTitle").textContent = `Panel de Control · ${roleLabel}`;
     document.getElementById("searchInput").placeholder = "Buscar en AdminPro...";
     document.getElementById("welcome").innerHTML = `<div class="welcome-copy"><h2 class="welcome-greeting type-headline-md">Bienvenido de nuevo</h2><p class="welcome-subtitle type-body-md">Resumen actualizado de tu negocio</p></div>`;
@@ -48,8 +48,7 @@
   }
 
   function init() {
-    renderNavigation(); renderDashboard(); mobileNavigation();
-    const activeUser = AppCore.user(); document.getElementById("userCard").innerHTML = `<span class="user-avatar">${AppCore.isAdmin() ? "AD" : "OP"}</span><div><div class="user-name">${escapeHtml(activeUser.name)}</div><div class="user-role">${AppCore.isAdmin() ? "Administrador" : "Operador"}</div></div>`;
+    renderDashboard(); mobileNavigation();
     window.addEventListener("adminpro:datachange", renderDashboard);
   }
   document.addEventListener("DOMContentLoaded", init);

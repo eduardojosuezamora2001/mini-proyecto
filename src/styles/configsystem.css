@@ -487,3 +487,47 @@ button:hover {
 .backup-actions button { display:inline-flex; align-items:center; gap:7px; height:38px; padding:0 14px; border-radius:7px; cursor:pointer; }
 .backup-actions svg { width:16px; }
 .backup-message { width:100%; min-height:18px; color:#174ea6; }
+
+/* Settings refresh */
+.page-heading { margin:0 0 28px; }
+.page-heading h1 { font-size:32px; }
+.settings-layout { grid-template-columns:220px minmax(0,720px); align-items:start; gap:28px; }
+.settings-nav { position:sticky; top:88px; padding:10px; border:1px solid #dce2ec; border-radius:12px; background:#fff; box-shadow:0 1px 3px rgba(20,27,43,.05); }
+.settings-nav .nav-item { height:44px; border-radius:8px; font-size:13px; }
+.settings-content { min-width:0; }
+.settings-panel { width:100%; border-radius:14px; box-shadow:0 8px 28px rgba(30,50,90,.07); }
+.settings-panel[hidden] { display:none; }
+.card-body { padding:28px; }
+.card-body h2 { font-size:20px; line-height:28px; }
+.card-description { margin-bottom:24px; color:#64748b; font-size:13px; }
+.avatar { position:relative; overflow:hidden; width:76px; height:76px; border:3px solid #fff; background:#e7edff; box-shadow:0 0 0 1px #cbd5e1,0 5px 15px rgba(15,23,42,.12); }
+.avatar img { width:100%; height:100%; object-fit:cover; }
+.avatar-actions .secondary-button { height:34px; font-size:12px; }
+.avatar-actions small { color:#64748b; font-size:10px; }
+.field { gap:8px; }
+.field label { color:#334155; font-size:12px; }
+.field input { height:42px; padding:0 13px; border-radius:8px; font-size:13px; }
+.input-wrap svg { top:13px; left:12px; }
+.input-wrap input { padding-left:36px; }
+.form-stack { display:grid; gap:18px; max-width:480px; }
+.card-footer { min-height:72px; height:auto; gap:12px; padding:14px 28px; }
+.card-footer .primary-button { min-width:130px; height:38px; padding:0 16px; font-size:12px; }
+.ghost-button { height:38px; padding:0 14px; border:1px solid transparent; font-size:12px; }
+.form-status { margin-right:auto; color:#08704e; font-size:12px; }
+.form-status.is-error { color:#b42318; }
+.preference-list { display:grid; gap:4px; }
+.preference-list>label { display:flex; align-items:center; justify-content:space-between; gap:20px; min-height:66px; padding:12px 4px; border-bottom:1px solid #edf0f5; }
+.preference-list span { display:grid; gap:4px; }
+.preference-list strong { font-size:13px; }
+.preference-list small { color:#64748b; font-size:11px; font-weight:400; }
+.preference-list select { min-width:130px; height:36px; padding:0 10px; border:1px solid #cbd5e1; border-radius:8px; background:#fff; }
+.preference-list input[type="checkbox"] { width:38px; height:21px; appearance:none; border-radius:999px; background:#cbd5e1; cursor:pointer; transition:.2s; }
+.preference-list input[type="checkbox"]:checked { background:#2563eb; box-shadow:inset 17px 0 0 2px #fff; }
+.system-details { display:grid; gap:0; margin:0; }
+.system-details div { display:flex; justify-content:space-between; gap:20px; padding:15px 0; border-bottom:1px solid #edf0f5; }
+.system-details dt { color:#64748b; }
+.system-details dd { margin:0; font-weight:600; text-align:right; }
+.backup-card { max-width:968px; margin-top:28px; padding:24px 28px; border-radius:14px; box-shadow:0 8px 28px rgba(30,50,90,.06); }
+.backup-actions .secondary-button,.backup-actions .primary-button { min-width:130px; height:38px; font-size:11px; }
+@media(max-width:900px){.settings-layout{grid-template-columns:1fr}.settings-nav{position:static;grid-template-columns:repeat(4,1fr)}.settings-nav .nav-item{justify-content:center}.settings-nav .nav-item span{display:none}}
+@media(max-width:560px){.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.card-body{padding:22px 18px}.card-footer{padding:14px 18px;flex-wrap:wrap}.backup-actions{width:100%;flex-direction:column}.backup-actions button{width:100%}.settings-nav{grid-template-columns:repeat(2,1fr)}.preference-list>label{align-items:flex-start;flex-direction:column}.form-status{width:100%}}

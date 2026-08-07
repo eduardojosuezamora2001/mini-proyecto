@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const selectAll = document.querySelector("#select-all");
   const pagination = document.querySelector(".pagination");
   let currentPage = 1;
+  const sortState = UIComponents.makeSortable(document.querySelector("table"), { 1:"name", 2:"email", 3:"status", 4:"lastOrder" }, () => { currentPage = 1; render(); });
 
   const escapeHtml = (value) => {
     const div = document.createElement("div");
@@ -39,7 +40,8 @@ document.addEventListener("DOMContentLoaded", () => {
       return matchesText && (status === "all" || customer.status === status);
     });
 
-    const result = AppCore.page(visible, currentPage); currentPage = result.current;
+    const sorted = UIComponents.sort(visible, sortState);
+    const result = AppCore.page(sorted, currentPage); currentPage = result.current;
     tbody.innerHTML = result.items.map((customer) => `
       <tr data-id="${escapeHtml(customer.id)}" data-status="${escapeHtml(customer.status)}">
         <td><input type="checkbox" aria-label="Seleccionar ${escapeHtml(customer.name)}" /></td>
@@ -47,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <td>${escapeHtml(customer.email)}</td>
         <td><span class="status ${escapeHtml(customer.status)}"><b></b>${escapeHtml(customer.status[0].toUpperCase() + customer.status.slice(1))}</span></td>
         <td>${escapeHtml(customer.lastOrder || "No orders yet")}</td>
-        <td class="crud-actions"><button data-action="view" title="Ver">Ver</button><button data-action="edit" data-permission="edit" title="Modificar">Modificar</button><button data-action="delete" data-permission="delete" title="Eliminar">Eliminar</button></td>
+        <td>${UIComponents.actions()}</td>
       </tr>`).join("");
 
     emptyState.hidden = visible.length !== 0;
@@ -62,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return [
       { name: "name", label: "Nombre completo", required: true, full: true },
       { name: "email", label: "Correo electrónico", type: "email", required: true },
-      { name: "phone", label: "Teléfono", type: "tel", required: true },
+      { name: "phone", label: "Teléfono", type: "tel", required: true, pattern: "[+0-9() -]{8,20}", patternMessage: "Usa entre 8 y 20 caracteres: números, espacios, +, guiones o paréntesis." },
       { name: "status", label: "Estado", type: "select", default: "active", options: [{ value: "active", label: "Activo" }, { value: "pending", label: "Pendiente" }, { value: "inactive", label: "Inactivo" }] },
       { name: "lastOrder", label: "Último pedido", default: "No orders yet", full: true }
     ];
@@ -91,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (customer) { Storage.add(KEY, customer); render(); }
   });
 
-  tbody.addEventListener("click", async (event) => {
+  tbody.addEventListener("click", AppErrors.guard(async (event) => {
     const button = event.target.closest("[data-action]");
     if (!button) return;
     const id = button.closest("tr").dataset.id;
@@ -104,10 +106,10 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (AppCore.can("delete")) {
       const related = BusinessRules.relatedOrders("customers", id).length;
       const warning = related ? `Este cliente tiene ${related} pedido(s) asociado(s). Los pedidos conservarán su referencia histórica.\n\n` : "";
-      if (confirm(`${warning}¿Eliminar a ${customer.name}?`)) Storage.delete(KEY, id);
+      if (confirm(`${warning}¿Eliminar a ${customer.name}?`)) UndoManager.remove({ entity:KEY, id, label:customer.name, onChange:render });
     }
-    render();
-  });
+    if (button.dataset.action !== "delete") render();
+  }, "Acciones de clientes"));
 
   render();
 });

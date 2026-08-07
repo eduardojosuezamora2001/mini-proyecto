@@ -10,6 +10,7 @@ const tableBody = document.getElementById("product-table-body");
 const searchInput = document.getElementById("product-search");
 const resultsSummary = document.getElementById("results-summary");
 let currentPage = 1;
+let sortState = { key:null, direction:"asc" };
 
 function escapeHtml(value) {
   const div = document.createElement("div");
@@ -22,7 +23,8 @@ function products() { return Storage.get(PRODUCT_KEY); }
 function renderProducts() {
   const term = searchInput.value.trim().toLowerCase();
   const filtered = products().filter((product) => [product.name, product.sku, product.category].join(" ").toLowerCase().includes(term));
-  const result = AppCore.page(filtered, currentPage); currentPage = result.current;
+  const sorted = UIComponents.sort(filtered, sortState, { price:(product)=>Number(product.price), stock:(product)=>Number(product.stock) });
+  const result = AppCore.page(sorted, currentPage); currentPage = result.current;
   tableBody.innerHTML = result.items.length ? result.items.map(buildRow).join("") : `<tr><td colspan="6" style="padding:32px;text-align:center">No se encontraron productos.</td></tr>`;
   resultsSummary.textContent = `Showing ${filtered.length} of ${products().length} products`;
   AppCore.pagination(document.getElementById("pagination"), result, (page) => { currentPage = page; renderProducts(); });
@@ -36,7 +38,7 @@ function buildRow(product) {
     <td>${escapeHtml(product.category)}<small style="display:block;color:#687083">${escapeHtml(Storage.find("suppliers", product.supplierId)?.companyName || "Sin proveedor")}</small></td><td class="align-right">$${Number(product.price).toFixed(2)}</td>
     <td class="align-right"><span class="${low ? "stock-low" : "stock-value"}">${Number(product.stock)}</span></td>
     <td><span class="tag ${product.status === "out_of_stock" ? "tag-out" : "tag-active"}">${product.status === "out_of_stock" ? "Out of Stock" : "Active"}</span></td>
-    <td><div class="product-crud"><button data-action="view">Ver</button><button data-action="edit" data-permission="edit">Modificar</button><button data-action="delete" data-permission="delete">Eliminar</button></div></td></tr>`;
+    <td class="product-crud">${UIComponents.actions()}</td></tr>`;
 }
 
 function productFields() {
@@ -45,7 +47,7 @@ function productFields() {
     { name: "sku", label: "SKU", required: true },
     { name: "category", label: "Categoría", required: true, default: "General" },
     { name: "supplierId", label: "Proveedor", type: "select", required: true, options: [{ value: "", label: "Selecciona un proveedor" }, ...Storage.get("suppliers").map((supplier) => ({ value: String(supplier.id), label: supplier.companyName }))] },
-    { name: "price", label: "Precio", type: "number", min: "0", step: "0.01", required: true, default: "0" },
+    { name: "price", label: "Precio", type: "number", min: "0.01", step: "0.01", required: true, default: "0.01" },
     { name: "stock", label: "Existencias", type: "number", min: "0", step: "1", required: true, default: "0" },
     { name: "image", label: "URL de imagen", type: "url", placeholder: "https://...", full: true }
   ];
@@ -68,12 +70,13 @@ async function askProduct(current = {}) {
 
 document.addEventListener("DOMContentLoaded", () => {
   if (!Storage.exists(PRODUCT_KEY)) Storage.save(PRODUCT_KEY, PRODUCT_SEED);
+  sortState = UIComponents.makeSortable(document.querySelector(".product-table"), { 0:"name", 1:"category", 2:"price", 3:"stock", 4:"status" }, () => { currentPage = 1; renderProducts(); });
   renderProducts();
   searchInput.addEventListener("input", AppCore.debounce(() => { currentPage = 1; renderProducts(); }));
   document.getElementById("add-product-btn").addEventListener("click", async () => { const item = await askProduct(); if (item) { Storage.add(PRODUCT_KEY, item); renderProducts(); } });
   document.getElementById("filters-btn").addEventListener("click", () => searchInput.focus());
   document.querySelector(".view-toggle").addEventListener("click", (event) => { const btn = event.target.closest(".view-btn"); if (btn) { document.querySelectorAll(".view-btn").forEach((b) => b.classList.remove("active")); btn.classList.add("active"); } });
-  tableBody.addEventListener("click", async (event) => {
+  tableBody.addEventListener("click", AppErrors.guard(async (event) => {
     const button = event.target.closest("[data-action]"); if (!button) return;
     const id = button.closest("tr").dataset.id; const item = Storage.find(PRODUCT_KEY, id);
     if (button.dataset.action === "view") { await viewProduct(item); }
@@ -81,9 +84,9 @@ document.addEventListener("DOMContentLoaded", () => {
     else if (AppCore.can("delete")) {
       const related = BusinessRules.relatedOrders("products", id).length;
       const warning = related ? `Este producto aparece en ${related} pedido(s). Si continúas, los pedidos conservarán la referencia pero ya no podrán calcular ese artículo.\n\n` : "";
-      if (confirm(`${warning}¿Eliminar ${item.name}?`)) Storage.delete(PRODUCT_KEY, id);
+      if (confirm(`${warning}¿Eliminar ${item.name}?`)) UndoManager.remove({ entity:PRODUCT_KEY, id, label:item.name, onChange:renderProducts });
     }
-    renderProducts();
-  });
+    if (button.dataset.action !== "delete") renderProducts();
+  }, "Acciones de productos"));
   document.getElementById("pagination").hidden = false;
 });

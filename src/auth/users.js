@@ -25,7 +25,10 @@ function initUsers() {
         save(USERS_KEY, DEFAULT_USERS);
     } else {
         const normalized = existing.map((user, index) => ({ ...user, role: user.role || (index === 0 ? 'admin' : 'operator') }));
-        if (!normalized.some((user) => user.username === 'operador')) normalized.push(DEFAULT_USERS[1]);
+        if (!normalized.some((user) => user.username === 'operador')) {
+            const nextId = normalized.reduce((max, user) => Math.max(max, Number(user.id) || 0), 0) + 1;
+            normalized.push({ ...DEFAULT_USERS[1], id: nextId });
+        }
         save(USERS_KEY, normalized);
     }
 }
@@ -61,8 +64,17 @@ export function findUserByCredentials(username, password) {
  */
 export function addUser(newUser) {
     const users = getUsers();
-    const nextId = users.reduce((max, u) => Math.max(max, u.id), 0) + 1;
+    const nextId = users.reduce((max, u) => Math.max(max, Number(u.id) || 0), 0) + 1;
     const userToStore = { id: nextId, ...newUser };
     save(USERS_KEY, [...users, userToStore]);
     return userToStore;
+}
+
+export function updateUser(id, changes) {
+    const users = getUsers();
+    const index = users.findIndex((user) => String(user.id) === String(id));
+    if (index === -1) return null;
+    users[index] = { ...users[index], ...changes, id: users[index].id };
+    save(USERS_KEY, users);
+    return users[index];
 }

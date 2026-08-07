@@ -30,7 +30,22 @@ const CrudModal = (() => {
   function submit(event) {
     event.preventDefault();
     const form = event.currentTarget;
-    if (!form.reportValidity()) return;
+    let valid = true;
+    form.querySelectorAll("input, select").forEach((control) => {
+      const wrapper = control.closest(".crud-modal__field");
+      const error = wrapper.querySelector(".field-error-message");
+      let message = "";
+      if (control.validity.valueMissing) message = "Este campo es obligatorio.";
+      else if (control.validity.typeMismatch) message = control.type === "email" ? "Ingresa un correo válido, por ejemplo usuario@dominio.com." : "El formato ingresado no es válido.";
+      else if (control.validity.patternMismatch) message = control.dataset.patternMessage || "El formato ingresado no es válido.";
+      else if (control.validity.rangeUnderflow) message = `El valor mínimo permitido es ${control.min}.`;
+      else if (control.validity.rangeOverflow) message = `El valor máximo permitido es ${control.max}.`;
+      else if (control.validity.stepMismatch) message = "Ingresa un valor numérico válido.";
+      wrapper.classList.toggle("is-invalid", Boolean(message));
+      error.textContent = message;
+      if (message) valid = false;
+    });
+    if (!valid) return;
     const values = Object.fromEntries(new FormData(form).entries());
     modal.hidden = true;
     document.body.classList.remove("crud-modal-open");
@@ -65,6 +80,8 @@ const CrudModal = (() => {
         control.type = field.type || "text";
         if (field.min !== undefined) control.min = field.min;
         if (field.step !== undefined) control.step = field.step;
+        if (field.pattern) control.pattern = field.pattern;
+        if (field.patternMessage) control.dataset.patternMessage = field.patternMessage;
         if (field.placeholder) control.placeholder = field.placeholder;
       }
       control.id = `modal-${field.name}`;
@@ -72,7 +89,10 @@ const CrudModal = (() => {
       control.value = values[field.name] ?? field.default ?? "";
       control.required = Boolean(field.required);
       control.disabled = readOnly;
-      wrapper.append(label, control);
+      const fieldError = document.createElement("small");
+      fieldError.className = "field-error-message";
+      control.addEventListener("input", () => { wrapper.classList.remove("is-invalid"); fieldError.textContent = ""; });
+      wrapper.append(label, control, fieldError);
       container.appendChild(wrapper);
     });
     modal.hidden = false;

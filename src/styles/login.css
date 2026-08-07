@@ -71,6 +71,8 @@ body {
   font-size: 14px;
   line-height: 20px;
 }
+.register-access { margin:2px 0 0; color:#64748b; text-align:center; font-size:13px; }
+.register-access a { color:#2563eb; font-weight:600; }
 
 a {
   color: var(--color-primary);

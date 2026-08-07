@@ -10,51 +10,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../styles/configsystem.css" />
   <link rel="stylesheet" href="../styles/unified-theme.css" />
+  <link rel="stylesheet" href="../styles/admin-sidebar.css" />
 
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
   <div class="app-shell">
-    <aside class="sidebar">
-      <div class="brand">
-        <div class="brand-mark">
-          <i data-lucide="layout-dashboard"></i>
-        </div>
-
-        <div class="brand-copy">
-          <span class="brand-name">AdminPro</span>
-          <span class="brand-subtitle">Enterprise ERP</span>
-        </div>
-      </div>
-
-      <nav class="main-nav" aria-label="Navegación principal">
-        <a class="nav-item" href="adminpanel.html">
-          <i data-lucide="layout-grid"></i>
-          <span>Dashboard</span>
-        </a>
-
-        <a class="nav-item" href="customers.html">
-          <i data-lucide="users"></i>
-          <span>Customers</span>
-        </a>
-
-        <a class="nav-item" href="products.html">
-          <i data-lucide="archive"></i>
-          <span>Products</span>
-        </a>
-
-        <a class="nav-item" href="supplierman.html">
-          <i data-lucide="factory"></i>
-          <span>Suppliers</span>
-        </a>
-        <a class="nav-item" href="orders.html"><i data-lucide="shopping-cart"></i><span>Orders</span></a>
-
-        <a class="nav-item active" href="configsystem.html" aria-current="page">
-          <i data-lucide="settings"></i>
-          <span>Settings</span>
-        </a>
-      </nav>
-    </aside>
+    <admin-sidebar active="settings"></admin-sidebar>
 
     <main class="workspace">
       <header class="topbar">
@@ -87,28 +49,29 @@
 
         <div class="settings-layout">
           <nav class="settings-nav" aria-label="Secciones de configuración">
-            <button class="nav-item active">
+            <button class="nav-item active" data-settings-tab="profile">
               <i data-lucide="user-round"></i>
               <span>Profile</span>
             </button>
 
-            <button class="nav-item">
+            <button class="nav-item" data-settings-tab="security">
               <i data-lucide="shield-check"></i>
               <span>Security</span>
             </button>
 
-            <button class="nav-item">
+            <button class="nav-item" data-settings-tab="preferences">
               <i data-lucide="sliders-horizontal"></i>
               <span>Preferences</span>
             </button>
 
-            <button class="nav-item">
+            <button class="nav-item" data-settings-tab="system">
               <i data-lucide="cpu"></i>
               <span>System</span>
             </button>
           </nav>
 
-          <form class="profile-card">
+          <div class="settings-content">
+          <form class="profile-card settings-panel" id="profile-form" data-settings-panel="profile">
             <div class="card-body">
               <h2>Profile Information</h2>
               <p class="card-description">
@@ -116,14 +79,16 @@
               </p>
 
               <div class="avatar-row">
-                <div class="avatar">
+                <div class="avatar" id="avatar-preview">
                   <i data-lucide="user-round"></i>
+                  <img id="avatar-image" alt="Avatar del perfil" hidden />
                 </div>
 
                 <div class="avatar-actions">
-                  <button type="button" class="secondary-button">
+                  <button type="button" class="secondary-button" id="change-avatar">
                     Change Avatar
                   </button>
+                  <input type="file" id="avatar-file" accept="image/png,image/jpeg,image/gif" hidden />
                   <small>JPG, GIF or PNG. Max size of 800K</small>
                 </div>
               </div>
@@ -131,12 +96,12 @@
               <div class="form-grid">
                 <div class="field">
                   <label for="first-name">First Name</label>
-                  <input id="first-name" value="Jane" />
+                  <input id="first-name" name="firstName" autocomplete="given-name" required />
                 </div>
 
                 <div class="field">
                   <label for="last-name">Last Name</label>
-                  <input id="last-name" value="Doe" />
+                  <input id="last-name" name="lastName" autocomplete="family-name" required />
                 </div>
 
                 <div class="field full">
@@ -146,7 +111,9 @@
                     <input
                       id="email"
                       type="email"
-                      value="jane.doe@example.com"
+                      name="email"
+                      autocomplete="email"
+                      required
                     />
                   </div>
                 </div>
@@ -154,10 +121,22 @@
             </div>
 
             <footer class="card-footer">
-              <button type="reset" class="ghost-button">Cancel</button>
+              <span class="form-status" id="profile-status" role="status"></span>
+              <button type="button" class="ghost-button" id="cancel-profile">Cancelar</button>
               <button type="submit" class="primary-button">Save Changes</button>
             </footer>
           </form>
+
+          <form class="profile-card settings-panel" id="security-form" data-settings-panel="security" hidden>
+            <div class="card-body"><h2>Seguridad</h2><p class="card-description">Actualiza la contraseña de tu cuenta.</p><div class="form-stack"><div class="field"><label for="current-password">Contraseña actual</label><input id="current-password" type="password" required /></div><div class="field"><label for="new-password">Nueva contraseña</label><input id="new-password" type="password" minlength="6" required /></div><div class="field"><label for="confirm-password">Confirmar contraseña</label><input id="confirm-password" type="password" minlength="6" required /></div></div></div><footer class="card-footer"><span class="form-status" id="security-status" role="status"></span><button type="submit" class="primary-button">Actualizar contraseña</button></footer>
+          </form>
+
+          <form class="profile-card settings-panel" id="preferences-form" data-settings-panel="preferences" hidden>
+            <div class="card-body"><h2>Preferencias</h2><p class="card-description">Personaliza la experiencia de AdminPro.</p><div class="preference-list"><label><span><strong>Idioma</strong><small>Idioma de la interfaz</small></span><select id="language"><option value="es">Español</option><option value="en">English</option></select></label><label><span><strong>Notificaciones</strong><small>Mostrar avisos del sistema</small></span><input id="notifications-enabled" type="checkbox" checked /></label><label><span><strong>Filas por página</strong><small>Cantidad predeterminada en las tablas</small></span><select id="page-size"><option value="10">10</option><option value="15">15</option><option value="20">20</option></select></label></div></div><footer class="card-footer"><span class="form-status" id="preferences-status" role="status"></span><button type="submit" class="primary-button">Guardar preferencias</button></footer>
+          </form>
+
+          <section class="profile-card settings-panel" data-settings-panel="system" hidden><div class="card-body"><h2>Información del sistema</h2><p class="card-description">Estado de la base local y de la sesión.</p><dl class="system-details" id="system-details"></dl></div></section>
+          </div>
         </div>
         <section class="backup-card" aria-labelledby="backup-title">
           <div><h2 id="backup-title">Respaldo de datos</h2><p>Exporta toda la base local o restaura un archivo JSON de AdminPro.</p><small id="backup-summary"></small></div>
@@ -169,6 +148,7 @@
   </div>
 
   <script src="../js/localStorage.js"></script>
-  <script src="../js/configsystem.js"></script>
+  <script src="../components/adminSidebar.js"></script>
+  <script type="module" src="../js/configsystem.js"></script>
 </body>
 </html>

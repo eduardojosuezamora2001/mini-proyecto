@@ -10,21 +10,13 @@
   <link rel="stylesheet" href="../styles/customers.css" />
   <link rel="stylesheet" href="../styles/unified-theme.css" />
   <link rel="stylesheet" href="../styles/crud-modal.css" />
+  <link rel="stylesheet" href="../styles/ui-toolkit.css" />
+  <link rel="stylesheet" href="../styles/admin-sidebar.css" />
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body class="supplier-page">
   <div class="app-shell">
-    <aside class="sidebar">
-      <a class="brand" href="adminpanel.html" aria-label="AdminPro"><span class="brand-mark">A</span><span><strong>AdminPro</strong><small>Enterprise ERP</small></span></a>
-      <nav class="side-nav" aria-label="Navegación principal">
-        <a class="nav-item" href="adminpanel.html"><i data-lucide="layout-grid"></i><span>Dashboard</span></a>
-        <a class="nav-item" href="customers.html"><i data-lucide="users-round"></i><span>Customers</span></a>
-        <a class="nav-item" href="products.html"><i data-lucide="archive"></i><span>Products</span></a>
-        <a class="nav-item active" href="supplierman.html" aria-current="page"><i data-lucide="factory"></i><span>Suppliers</span></a>
-        <a class="nav-item" href="orders.html"><i data-lucide="shopping-cart"></i><span>Orders</span></a>
-      </nav>
-      <a class="nav-item settings" href="configsystem.html"><i data-lucide="settings"></i><span>Settings</span></a>
-    </aside>
+    <admin-sidebar active="suppliers"></admin-sidebar>
     <main class="workspace">
       <header class="topbar"><label class="global-search"><i data-lucide="search"></i><input id="supplier-search" type="search" placeholder="Search suppliers..." /></label><div class="top-actions"><button class="icon-button" aria-label="Notificaciones"><i data-lucide="bell"></i><b></b></button><span class="user-photo supplier-user">AD</span></div></header>
       <section class="content">
@@ -42,6 +34,8 @@
   <script src="../js/dataBootstrap.js"></script>
   <script src="../js/businessLogic.js"></script>
   <script src="../js/appCore.js"></script>
+  <script src="../js/uiToolkit.js"></script>
+  <script src="../components/adminSidebar.js"></script>
   <script src="../js/crudModal.js"></script>
   <script src="../js/supplierman.js"></script>
 </body>

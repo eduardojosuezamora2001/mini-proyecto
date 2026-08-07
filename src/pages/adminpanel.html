@@ -13,6 +13,7 @@
 
 <link rel="stylesheet" href="../styles/adminpanel.css">
 <link rel="stylesheet" href="../styles/unified-theme.css">
+<link rel="stylesheet" href="../styles/admin-sidebar.css">
 </head>
 <body>
 
@@ -20,25 +21,7 @@
 
   <div class="scrim" id="scrim" hidden></div>
 
-  <aside class="sidebar" id="sidebar" aria-label="Navegación principal">
-    <div class="sidebar-top">
-      <div class="brand">
-        <span class="brand-mark" aria-hidden="true">AP</span>
-        <div class="brand-copy">
-          <span class="brand-name" id="brandName"></span>
-          <span class="brand-tagline" id="brandTagline"></span>
-        </div>
-        <button class="sidebar-close" id="sidebarClose" aria-label="Cerrar menú">×</button>
-      </div>
-
-      <nav class="nav" id="nav" aria-label="Secciones"></nav>
-    </div>
-
-    <div class="sidebar-bottom">
-      <div class="nav-footer" id="navFooter"></div>
-      <div class="user-card" id="userCard"></div>
-    </div>
-  </aside>
+  <admin-sidebar id="sidebar" active="dashboard"></admin-sidebar>
 
   <div class="main">
 
@@ -85,6 +68,7 @@
 <script src="../js/dataBootstrap.js"></script>
 <script src="../js/businessLogic.js"></script>
 <script src="../js/appCore.js"></script>
+<script src="../components/adminSidebar.js"></script>
 <script src="../js/adminpanel.js"></script>
 </body>
 </html>

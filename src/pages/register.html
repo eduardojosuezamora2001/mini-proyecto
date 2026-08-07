@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crear cuenta | AdminPro</title>
+  <link rel="stylesheet" href="../styles/login.css" />
+  <link rel="stylesheet" href="../styles/register.css" />
+</head>
+<body class="login-page register-page">
+  <main class="login-card register-card">
+    <div class="login-banner"><span class="dot"></span>Registro seguro de usuario</div>
+    <div class="login-body">
+      <a class="register-logo" href="login.html" aria-label="Volver al inicio de sesión">AP</a>
+      <h1>Crear una cuenta</h1>
+      <p class="login-subtitle">Completa tus datos para ingresar a AdminPro.</p>
+
+      <form id="register-form" class="login-form" novalidate>
+        <div class="form-field">
+          <label for="register-email">Correo electrónico</label>
+          <div class="input-group"><span class="field-symbol">@</span><input id="register-email" name="email" type="email" placeholder="nombre@correo.com" autocomplete="email" required /></div>
+        </div>
+        <div class="form-field">
+          <label for="register-username">Usuario</label>
+          <div class="input-group"><span class="field-symbol">●</span><input id="register-username" name="username" type="text" minlength="3" placeholder="Tu nombre de usuario" autocomplete="username" required /></div>
+        </div>
+        <div class="register-grid">
+          <div class="form-field">
+            <label for="register-password">Contraseña</label>
+            <div class="input-group"><span class="field-symbol">◆</span><input id="register-password" name="password" type="password" minlength="6" placeholder="Mínimo 6 caracteres" autocomplete="new-password" required /></div>
+          </div>
+          <div class="form-field">
+            <label for="register-confirm">Confirmar contraseña</label>
+            <div class="input-group"><span class="field-symbol">◆</span><input id="register-confirm" name="confirmPassword" type="password" minlength="6" placeholder="Repite la contraseña" autocomplete="new-password" required /></div>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="register-role">Rol</label>
+          <div class="input-group select-group"><span class="field-symbol">◇</span><select id="register-role" name="role" required><option value="">Selecciona un rol</option><option value="client">Cliente</option><option value="supplier">Proveedor</option></select></div>
+        </div>
+        <p id="register-error" class="field-error register-message" role="alert" hidden></p>
+        <button type="submit" class="btn btn-primary" id="register-submit">Crear cuenta</button>
+        <p class="login-link">¿Ya tienes una cuenta? <a href="login.html">Iniciar sesión</a></p>
+      </form>
+    </div>
+  </main>
+  <script type="module" src="../js/register.js"></script>
+</body>
+</html>
