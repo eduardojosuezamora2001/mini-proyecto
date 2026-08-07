@@ -103,6 +103,10 @@ button { font-family: inherit; cursor: pointer; }
 input { font-family: inherit; }
 ul { list-style: none; margin: 0; padding: 0; }
 a { color: inherit; }
+a { text-decoration: none; }
+.simple-icon { display:grid; width:20px; height:20px; place-items:center; font-size:18px; }
+.dashboard-link { color:inherit; text-decoration:none; transition:transform .15s ease, box-shadow .15s ease; }
+.dashboard-link:hover { transform:translateY(-2px); box-shadow:var(--shadow-2); }
 
 /* ---- Typography scale ---- */
 .type-display        { font-size: 36px; font-weight: 700; line-height: 44px; letter-spacing: -0.02em; }
