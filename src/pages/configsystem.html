@@ -47,6 +47,7 @@
           <i data-lucide="factory"></i>
           <span>Suppliers</span>
         </a>
+        <a class="nav-item" href="orders.html"><i data-lucide="shopping-cart"></i><span>Orders</span></a>
 
         <a class="nav-item active" href="configsystem.html" aria-current="page">
           <i data-lucide="settings"></i>
@@ -158,10 +159,16 @@
             </footer>
           </form>
         </div>
+        <section class="backup-card" aria-labelledby="backup-title">
+          <div><h2 id="backup-title">Respaldo de datos</h2><p>Exporta toda la base local o restaura un archivo JSON de AdminPro.</p><small id="backup-summary"></small></div>
+          <div class="backup-actions"><button type="button" class="secondary-button" id="export-data"><i data-lucide="download"></i> Exportar JSON</button><button type="button" class="primary-button" id="import-data"><i data-lucide="upload"></i> Importar JSON</button><input type="file" id="import-file" accept="application/json,.json" hidden></div>
+          <p class="backup-message" id="backup-message" role="status"></p>
+        </section>
       </section>
     </main>
   </div>
 
+  <script src="../js/localStorage.js"></script>
   <script src="../js/configsystem.js"></script>
 </body>
 </html>

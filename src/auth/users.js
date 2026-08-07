@@ -12,8 +12,8 @@ import { save, get } from './storage.js';
 const USERS_KEY = 'users';
 
 const DEFAULT_USERS = [
-    { id: 1, username: 'admin', password: '123456', name: 'Administrador' },
-    { id: 2, username: 'jperez', password: 'clave2024', name: 'Juan Pérez' }
+    { id: 1, username: 'admin', password: '123456', name: 'Administrador', role: 'admin' },
+    { id: 2, username: 'operador', password: '123456', name: 'Operador', role: 'operator' }
 ];
 
 /**
@@ -23,6 +23,10 @@ function initUsers() {
     const existing = get(USERS_KEY);
     if (!Array.isArray(existing) || existing.length === 0) {
         save(USERS_KEY, DEFAULT_USERS);
+    } else {
+        const normalized = existing.map((user, index) => ({ ...user, role: user.role || (index === 0 ? 'admin' : 'operator') }));
+        if (!normalized.some((user) => user.username === 'operador')) normalized.push(DEFAULT_USERS[1]);
+        save(USERS_KEY, normalized);
     }
 }
 

@@ -544,6 +544,8 @@ button {
 .product-crud { display:flex; justify-content:flex-end; gap:6px; }
 .product-crud button { padding:5px 8px; border:1px solid var(--color-outline-variant); border-radius:6px; background:#fff; color:var(--color-primary); cursor:pointer; }
 .product-crud button[data-action="delete"] { color:#b42318; }
+.product-crud button[data-action="view"] { color:#475569; }
+.product-crud button:hover { background:var(--color-surface-container-low); }
 
 /* ---------- Table footer / pagination ---------- */
 .table-footer {

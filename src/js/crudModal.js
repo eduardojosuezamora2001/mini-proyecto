@@ -39,11 +39,15 @@ const CrudModal = (() => {
     resolve(values);
   }
 
-  function open({ title, fields, values = {} }) {
+  function open({ title, fields, values = {}, readOnly = false }) {
     ensureModal();
     if (resolveCurrent) resolveCurrent(null);
     modal.querySelector(".crud-modal__title").textContent = title;
     modal.querySelector(".crud-modal__error").textContent = "";
+    const saveButton = modal.querySelector(".crud-modal__button--save");
+    const cancelButton = modal.querySelector(".crud-modal__button--cancel");
+    saveButton.hidden = readOnly;
+    cancelButton.textContent = readOnly ? "Cerrar" : "Cancelar";
     const container = modal.querySelector(".crud-modal__fields");
     container.innerHTML = "";
     fields.forEach((field) => {
@@ -67,6 +71,7 @@ const CrudModal = (() => {
       control.name = field.name;
       control.value = values[field.name] ?? field.default ?? "";
       control.required = Boolean(field.required);
+      control.disabled = readOnly;
       wrapper.append(label, control);
       container.appendChild(wrapper);
     });

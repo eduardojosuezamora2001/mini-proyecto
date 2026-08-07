@@ -21,6 +21,7 @@
         <a class="nav-item" href="customers.html"><i data-lucide="users-round"></i><span>Customers</span></a>
         <a class="nav-item" href="products.html"><i data-lucide="archive"></i><span>Products</span></a>
         <a class="nav-item active" href="supplierman.html" aria-current="page"><i data-lucide="factory"></i><span>Suppliers</span></a>
+        <a class="nav-item" href="orders.html"><i data-lucide="shopping-cart"></i><span>Orders</span></a>
       </nav>
       <a class="nav-item settings" href="configsystem.html"><i data-lucide="settings"></i><span>Settings</span></a>
     </aside>
@@ -31,12 +32,16 @@
         <section class="customer-card">
           <div class="table-toolbar"><strong>Directorio de proveedores</strong><label class="status-select"><select id="supplier-status"><option value="all">Todos los estados</option><option value="active">Activos</option><option value="inactive">Inactivos</option></select><i data-lucide="chevrons-up-down"></i></label></div>
           <div class="table-wrap"><table><thead><tr><th>Empresa</th><th>Contacto</th><th>Correo / Teléfono</th><th>Estado</th><th>Dirección</th><th class="actions-head">Acciones</th></tr></thead><tbody id="supplier-list"></tbody></table><p class="empty-state" hidden>No se encontraron proveedores.</p></div>
-          <footer class="card-footer"><p>Showing <strong id="supplier-visible">0</strong> of <strong id="supplier-total">0</strong> suppliers</p></footer>
+          <footer class="card-footer"><p>Showing <strong id="supplier-visible">0</strong> of <strong id="supplier-total">0</strong> suppliers</p><nav class="pagination" id="supplier-pagination"></nav></footer>
         </section>
       </section>
     </main>
   </div>
   <script src="../js/localStorage.js"></script>
+  <script src="../js/datasetGenerator.js"></script>
+  <script src="../js/dataBootstrap.js"></script>
+  <script src="../js/businessLogic.js"></script>
+  <script src="../js/appCore.js"></script>
   <script src="../js/crudModal.js"></script>
   <script src="../js/supplierman.js"></script>
 </body>

@@ -480,3 +480,10 @@ button:hover {
     padding: 0 16px;
   }
 }
+.backup-card { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:18px; margin-top:24px; padding:22px; border:1px solid #cfd4e3; border-radius:10px; background:#fff; }
+.backup-card h2,.backup-card p { margin:0 0 6px; }
+.backup-card small { color:#596275; }
+.backup-actions { display:flex; gap:10px; }
+.backup-actions button { display:inline-flex; align-items:center; gap:7px; height:38px; padding:0 14px; border-radius:7px; cursor:pointer; }
+.backup-actions svg { width:16px; }
+.backup-message { width:100%; min-height:18px; color:#174ea6; }

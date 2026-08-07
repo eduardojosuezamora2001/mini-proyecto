@@ -35,7 +35,8 @@ export function login(username, password) {
         user: {
             id: user.id,
             username: user.username,
-            name: user.name
+            name: user.name,
+            role: user.role
         }
     };
 
