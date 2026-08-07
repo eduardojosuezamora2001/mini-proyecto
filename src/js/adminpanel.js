@@ -242,15 +242,6 @@
 
   function renderNav() {
     const nav = document.getElementById('nav');
-    nav.innerHTML = data.navigation.menuItems.map(function (item) {
-      return (
-        '<button type="button" class="nav-item' + (item.active ? ' is-active' : '') + '" data-nav-id="' + item.id + '">' +
-          '<span data-icon="' + item.icon + '"></span>' +
-          '<span>' + escapeHtml(item.label) + '</span>' +
-        '</button>'
-      );
-    }).join('');
-
     nav.addEventListener('click', function (e) {
       const btn = e.target.closest('.nav-item');
       if (!btn) return;
@@ -263,8 +254,8 @@
     footer.innerHTML = data.navigation.footerItems.map(function (item) {
       return (
         '<button type="button" class="nav-item" data-nav-id="' + item.id + '">' +
-          '<span data-icon="' + item.icon + '"></span>' +
-          '<span>' + escapeHtml(item.label) + '</span>' +
+        '<span data-icon="' + item.icon + '"></span>' +
+        '<span>' + escapeHtml(item.label) + '</span>' +
         '</button>'
       );
     }).join('');
@@ -275,8 +266,8 @@
     document.getElementById('userCard').innerHTML =
       '<span class="user-avatar">' + escapeHtml(initials(u.name)) + '</span>' +
       '<div>' +
-        '<div class="user-name">' + escapeHtml(u.name) + '</div>' +
-        '<div class="user-role">' + escapeHtml(u.role) + '</div>' +
+      '<div class="user-name">' + escapeHtml(u.name) + '</div>' +
+      '<div class="user-role">' + escapeHtml(u.role) + '</div>' +
       '</div>';
   }
 
@@ -292,16 +283,16 @@
     const actionsHtml = w.actions.map(function (a) {
       return (
         '<button type="button" class="btn btn-primary">' +
-          '<span data-icon="' + a.icon + '"></span>' +
-          '<span>' + escapeHtml(a.label) + '</span>' +
+        '<span data-icon="' + a.icon + '"></span>' +
+        '<span>' + escapeHtml(a.label) + '</span>' +
         '</button>'
       );
     }).join('');
 
     document.getElementById('welcome').innerHTML =
       '<div class="welcome-copy">' +
-        '<h2 class="welcome-greeting type-headline-md">' + escapeHtml(w.greeting) + '</h2>' +
-        '<p class="welcome-subtitle type-body-md">' + escapeHtml(w.subtitle) + ' - Hoy, ' + formatDateEs(w.date) + '</p>' +
+      '<h2 class="welcome-greeting type-headline-md">' + escapeHtml(w.greeting) + '</h2>' +
+      '<p class="welcome-subtitle type-body-md">' + escapeHtml(w.subtitle) + ' - Hoy, ' + formatDateEs(w.date) + '</p>' +
       '</div>' +
       '<div class="welcome-actions">' + actionsHtml + '</div>';
   }
@@ -322,19 +313,19 @@
 
       return (
         '<article class="kpi-card' + (isWarning ? ' is-warning' : '') + '">' +
-          '<div class="kpi-top">' +
-            '<span class="kpi-icon" style="background:' + accent.bg + ';color:' + accent.fg + '" data-icon="' + card.icon + '"></span>' +
-            '<span class="kpi-trend is-' + direction + ' type-label-sm">' +
-              '<span data-icon="' + trendIcon + '"></span>' + trendLabel +
-            '</span>' +
-          '</div>' +
-          '<div class="kpi-body">' +
-            '<span class="kpi-label type-label-md">' + escapeHtml(card.label) + '</span>' +
-            '<div class="kpi-value-row">' +
-              '<span class="kpi-value">' + formatNumber(card.value) + '</span>' +
-              alertHtml +
-            '</div>' +
-          '</div>' +
+        '<div class="kpi-top">' +
+        '<span class="kpi-icon" style="background:' + accent.bg + ';color:' + accent.fg + '" data-icon="' + card.icon + '"></span>' +
+        '<span class="kpi-trend is-' + direction + ' type-label-sm">' +
+        '<span data-icon="' + trendIcon + '"></span>' + trendLabel +
+        '</span>' +
+        '</div>' +
+        '<div class="kpi-body">' +
+        '<span class="kpi-label type-label-md">' + escapeHtml(card.label) + '</span>' +
+        '<div class="kpi-value-row">' +
+        '<span class="kpi-value">' + formatNumber(card.value) + '</span>' +
+        alertHtml +
+        '</div>' +
+        '</div>' +
         '</article>'
       );
     }).join('');
@@ -349,12 +340,12 @@
     const panel = document.getElementById('chartPanel');
     panel.innerHTML =
       '<div class="chart-panel-header">' +
-        '<h2 class="type-headline-md">' + escapeHtml(c.title) + '</h2>' +
-        '<div class="segmented">' + filtersHtml + '</div>' +
+      '<h2 class="type-headline-md">' + escapeHtml(c.title) + '</h2>' +
+      '<div class="segmented">' + filtersHtml + '</div>' +
       '</div>' +
       '<div class="chart-placeholder">' +
-        '<span data-icon="bar-chart"></span>' +
-        '<span class="type-body-md">' + escapeHtml(c.placeholder) + '</span>' +
+      '<span data-icon="bar-chart"></span>' +
+      '<span class="type-body-md">' + escapeHtml(c.placeholder) + '</span>' +
       '</div>';
 
     panel.querySelector('.segmented').addEventListener('click', function (e) {
@@ -371,11 +362,11 @@
       const accent = ACTIVITY_ACCENT[item.type] || ACTIVITY_ACCENT.new_customer;
       return (
         '<li class="activity-item">' +
-          '<span class="activity-icon" style="background:' + accent.bg + ';color:' + accent.fg + '" data-icon="' + item.icon + '"></span>' +
-          '<div class="activity-copy">' +
-            '<p class="activity-message type-body-md">' + highlightMessage(item.message, item.highlight) + '</p>' +
-            '<span class="activity-time type-label-md">' + escapeHtml(item.timestamp) + '</span>' +
-          '</div>' +
+        '<span class="activity-icon" style="background:' + accent.bg + ';color:' + accent.fg + '" data-icon="' + item.icon + '"></span>' +
+        '<div class="activity-copy">' +
+        '<p class="activity-message type-body-md">' + highlightMessage(item.message, item.highlight) + '</p>' +
+        '<span class="activity-time type-label-md">' + escapeHtml(item.timestamp) + '</span>' +
+        '</div>' +
         '</li>'
       );
     }).join('');

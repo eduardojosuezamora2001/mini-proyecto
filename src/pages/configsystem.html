@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,60 +10,20 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../styles/configsystem.css" />
+  <link rel="stylesheet" href="../styles/navigation.css">
 
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body>
+
+<body data-page="customers">
   <div class="app-shell">
-    <aside class="sidebar">
-      <div class="brand">
-        <div class="brand-mark">
-          <i data-lucide="layout-dashboard"></i>
-        </div>
-
-        <div class="brand-copy">
-          <span class="brand-name">AdminPro</span>
-          <span class="brand-subtitle">Enterprise ERP</span>
-        </div>
-      </div>
-
-      <nav class="main-nav" aria-label="Navegación principal">
-        <button class="nav-item">
-          <i data-lucide="layout-grid"></i>
-          <span>Dashboard</span>
-        </button>
-
-        <button class="nav-item">
-          <i data-lucide="users"></i>
-          <span>Customers</span>
-        </button>
-
-        <button class="nav-item">
-          <i data-lucide="archive"></i>
-          <span>Products</span>
-        </button>
-
-        <button class="nav-item">
-          <i data-lucide="factory"></i>
-          <span>Suppliers</span>
-        </button>
-
-        <button class="nav-item active">
-          <i data-lucide="settings"></i>
-          <span>Settings</span>
-        </button>
-      </nav>
-    </aside>
+    <aside id="sidebar"></aside>
 
     <main class="workspace">
       <header class="topbar">
         <div class="search">
           <i data-lucide="search"></i>
-          <input
-            type="search"
-            aria-label="Buscar configuraciones"
-            placeholder="Search settings..."
-          />
+          <input type="search" aria-label="Buscar configuraciones" placeholder="Search settings..." />
         </div>
 
         <div class="toolbar">
@@ -141,11 +102,7 @@
                   <label for="email">Email Address</label>
                   <div class="input-wrap">
                     <i data-lucide="mail"></i>
-                    <input
-                      id="email"
-                      type="email"
-                      value="jane.doe@example.com"
-                    />
+                    <input id="email" type="email" value="jane.doe@example.com" />
                   </div>
                 </div>
               </div>
@@ -162,5 +119,7 @@
   </div>
 
   <script src="../js/configsystem.jss"></script>
+  <script src="../js/navigation.js" defer></script>
 </body>
+
 </html>

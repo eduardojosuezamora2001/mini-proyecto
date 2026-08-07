@@ -214,7 +214,7 @@ input:focus-visible,
 
 .nav { display: flex; flex-direction: column; gap: var(--space-xs); }
 
-.nav-item {
+/* .nav-item {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
@@ -235,7 +235,7 @@ input:focus-visible,
   background: var(--primary-fixed);
   color: var(--on-primary-fixed-variant);
   font-weight: 600;
-}
+} */
 
 .sidebar-bottom { display: flex; flex-direction: column; gap: var(--space-md); }
 .nav-footer { border-top: 1px solid var(--outline-variant); padding-top: var(--space-md); display: flex; flex-direction: column; gap: var(--space-xs); }

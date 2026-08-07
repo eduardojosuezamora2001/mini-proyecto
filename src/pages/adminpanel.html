@@ -1,84 +1,69 @@
-
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AdminPro — Enterprise ERP</title>
-<meta name="description" content="AdminPro, panel de control para la gestión empresarial." />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AdminPro — Enterprise ERP</title>
+  <meta name="description" content="AdminPro, panel de control para la gestión empresarial." />
 
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-<link rel="stylesheet" href="/src/styles/adminpanel.css">
+  <link rel="stylesheet" href="../styles/adminpanel.css">
+  <link rel="stylesheet" href="../styles/navigation.css">
 </head>
-<body>
 
-<div class="app-shell">
+<body data-page="admin-panel">
 
-  <div class="scrim" id="scrim" hidden></div>
+  <div class="app-shell">
 
-  <aside class="sidebar" id="sidebar" aria-label="Navegación principal">
-    <div class="sidebar-top">
-      <div class="brand">
-        <span class="brand-mark" data-icon="layout-grid" aria-hidden="true"></span>
-        <div class="brand-copy">
-          <span class="brand-name" id="brandName"></span>
-          <span class="brand-tagline" id="brandTagline"></span>
+    <div class="scrim" id="scrim" hidden></div>
+
+    <aside id="sidebar"></aside>
+    <div class="main">
+
+      <header class="topbar">
+        <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" data-icon="menu"></button>
+
+        <h1 class="topbar-title" id="topbarTitle"></h1>
+
+        <div class="topbar-actions">
+          <label class="search" for="searchInput">
+            <span class="search-icon" data-icon="search" aria-hidden="true"></span>
+            <input type="text" id="searchInput" autocomplete="off" />
+          </label>
+
+          <button class="icon-btn" id="bellBtn" type="button" aria-label="Notificaciones">
+            <span data-icon="bell" aria-hidden="true"></span>
+            <span class="badge-dot" id="bellDot" hidden></span>
+          </button>
+
+          <button class="icon-btn avatar-btn" type="button" aria-label="Cuenta">
+            <span data-icon="circle-user" aria-hidden="true"></span>
+          </button>
         </div>
-        <button class="sidebar-close" id="sidebarClose" aria-label="Cerrar menú" data-icon="x"></button>
-      </div>
+      </header>
 
-      <nav class="nav" id="nav" aria-label="Secciones"></nav>
+      <main class="content">
+
+        <section class="welcome" id="welcome" aria-label="Bienvenida"></section>
+
+        <section class="kpi-grid" id="kpiGrid" aria-label="Indicadores clave"></section>
+
+        <section class="panels">
+          <div class="panel chart-panel" id="chartPanel" aria-label="Crecimiento mensual"></div>
+          <div class="panel activity-panel" id="activityPanel" aria-label="Actividad reciente"></div>
+        </section>
+
+      </main>
     </div>
 
-    <div class="sidebar-bottom">
-      <div class="nav-footer" id="navFooter"></div>
-      <div class="user-card" id="userCard"></div>
-    </div>
-  </aside>
-
-  <div class="main">
-
-    <header class="topbar">
-      <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" data-icon="menu"></button>
-
-      <h1 class="topbar-title" id="topbarTitle"></h1>
-
-      <div class="topbar-actions">
-        <label class="search" for="searchInput">
-          <span class="search-icon" data-icon="search" aria-hidden="true"></span>
-          <input type="text" id="searchInput" autocomplete="off" />
-        </label>
-
-        <button class="icon-btn" id="bellBtn" type="button" aria-label="Notificaciones">
-          <span data-icon="bell" aria-hidden="true"></span>
-          <span class="badge-dot" id="bellDot" hidden></span>
-        </button>
-
-        <button class="icon-btn avatar-btn" type="button" aria-label="Cuenta">
-          <span data-icon="circle-user" aria-hidden="true"></span>
-        </button>
-      </div>
-    </header>
-
-    <main class="content">
-
-      <section class="welcome" id="welcome" aria-label="Bienvenida"></section>
-
-      <section class="kpi-grid" id="kpiGrid" aria-label="Indicadores clave"></section>
-
-      <section class="panels">
-        <div class="panel chart-panel" id="chartPanel" aria-label="Crecimiento mensual"></div>
-        <div class="panel activity-panel" id="activityPanel" aria-label="Actividad reciente"></div>
-      </section>
-
-    </main>
   </div>
 
-</div>
-
-<script src="/src/js/adminpanel.js"></script>
+  <script src="../js/adminpanel.js"></script>
+  <script src="../js/navigation.js" defer></script>
 </body>
+
 </html>
